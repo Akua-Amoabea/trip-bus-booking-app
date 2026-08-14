@@ -1,0 +1,39 @@
+from urllib.parse import quote_plus
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parents[1]
+
+class Settings(BaseSettings):
+    DB_USER:str
+    DB_PASSWORD:str
+    DB_HOST: str = "localhost"
+    DB_PORT: int= 5432
+    DB_NAME: str
+
+    SMTP_HOST: str
+    SMTP_PORT: int = 587
+    SMTP_EMAIL: str
+    SMTP_PASSWORD:str
+
+    SECRET_KEY: str
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 15
+    REFRESH_TOKEN_EXPIRE_DAYS: int = 30
+
+    REDIS_HOST: str
+    REDIS_PORT:str
+    
+    model_config = SettingsConfigDict(
+        env_file=BASE_DIR / ".env",
+        extra="ignore",
+    )
+
+settings = Settings()
+
+password = quote_plus(settings.DB_PASSWORD)
+
+
+
+DATABASE_URL = f"postgresql://{settings.DB_USER}:{password}@{settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_NAME}"
