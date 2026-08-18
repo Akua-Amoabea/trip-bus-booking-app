@@ -9,8 +9,7 @@ class CreateUserSchema(BaseModel):
     email: EmailStr
     password: str
     profile_picture: str
-    
-    
+       
     
 class GetUserSchema(BaseModel):
     uuid: UUID

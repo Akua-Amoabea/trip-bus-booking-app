@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 import uuid
 
 from app.config.database import Base
-from sqlalchemy import Column, String, DateTime
+from sqlalchemy import Column, String, DateTime, Boolean
 from sqlalchemy.dialects.postgresql import UUID
 
 
@@ -16,7 +16,4 @@ class User(Base):
     password = Column(String, nullable=False)
     created_time = Column(DateTime(timezone=True),nullable=False,default=lambda: datetime.now(timezone.utc))
     profile_picture=Column(String, nullable=True)
-    
-    
-    
-    
+    is_verified=Column(Boolean, nullable=False, default=False)

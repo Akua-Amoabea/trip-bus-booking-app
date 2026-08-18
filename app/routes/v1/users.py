@@ -1,11 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException
 
 from app.config.database import get_db
-from app.schemas.users import CreateUserSchema, GetUserSchema, LoginUserSchema
+from app.schemas.users import CreateUserSchema, GetUserSchema
 from sqlalchemy.orm import Session
 
 from app.models.users import User
-from app.core.core import hash_password, verify_password
+from app.core.core import hash_password
+from app.services.otp import get_otp_code, save_otp_code
+from app.services.email import send_verification_email
 
 
 
@@ -30,8 +32,13 @@ async def create_user(user:CreateUserSchema, db:Session=Depends(get_db)):
        email= user.email,
        password=hash_password(password=user.password),
        profile_picture=user.profile_picture,
+       is_verified=False
           
    )
+   
+   otp = get_otp_code()
+   save_otp_code(email=user.email, otp=otp)
+   send_verification_email(email=user.email, first_name=user.first_name, code=otp)
        
    db.add(new_user)
    db.commit()
