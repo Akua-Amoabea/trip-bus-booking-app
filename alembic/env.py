@@ -7,6 +7,7 @@ from urllib.parse import quote_plus
 from app.config.config import settings
 from app.config.database import Base
 from app.models.users import User
+from app.models.routes import Route
 
 from alembic import context
 

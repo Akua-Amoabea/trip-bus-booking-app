@@ -2,21 +2,21 @@ from datetime import datetime, timezone
 import uuid
 
 from app.config.database import Base
-from sqlalchemy import Column, String, DateTime, Boolean, Date, Time, Numeric
+from sqlalchemy import Column, String, DateTime, Boolean, Date, Time, Float
 from sqlalchemy.dialects.postgresql import UUID
 
 
-class Bus(Base):
-    __tablename__ = "buses"
+class Route(Base):
+    __tablename__ = "routes"
     
-    route_uuid=Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    uuid=Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     leaving_time=Column(Time, nullable=False)
     destination_time = Column(Time, nullable=False)
     with_ac = Column(Boolean, nullable=False)
     created_time = Column(DateTime(timezone=True),nullable=False,default=lambda: datetime.now(timezone.utc))
     location=Column(String, nullable=False)
     destination=Column(String, nullable=False)
-    price = Column(Numeric(10, 2), nullable=False)    
+    price = Column(Float, nullable=False)    
     leaving_date = Column(Date, nullable=False)    
     
     
