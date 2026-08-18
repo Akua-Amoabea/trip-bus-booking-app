@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 import uuid
 
 from app.config.database import Base
-from sqlalchemy import Column, String, DateTime, Boolean, Date, Time, Float
+from sqlalchemy import Column, ForeignKey, String, DateTime, Boolean, Date, Time, Float
 from sqlalchemy.dialects.postgresql import UUID
 
 
@@ -14,9 +14,14 @@ class Route(Base):
     destination_time = Column(Time, nullable=False)
     with_ac = Column(Boolean, nullable=False)
     created_time = Column(DateTime(timezone=True),nullable=False,default=lambda: datetime.now(timezone.utc))
-    location=Column(String, nullable=False)
-    destination=Column(String, nullable=False)
+    location_uuid = Column(UUID(as_uuid=True),ForeignKey("locations.uuid"),nullable=False)
+
+    destination_uuid = Column(
+        UUID(as_uuid=True),ForeignKey("locations.uuid"),nullable=False
+    )
     price = Column(Float, nullable=False)    
-    leaving_date = Column(Date, nullable=False)    
+    leaving_date = Column(Date, nullable=False) 
+    route_uuid = Column(UUID(as_uuid=True), ForeignKey("routes.uuid"), nullable=False)   
+    bus_uuid = Column(UUID(as_uuid=True), ForeignKey("buses.uuid"), nullable=False)
     
     

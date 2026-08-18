@@ -9,6 +9,7 @@ from app.config.database import Base
 from app.models.users import User
 from app.models.routes import Route
 from app.models.buses import Bus
+from app.models.locations import Location
 from alembic import context
 
 # this is the Alembic Config object, which provides
