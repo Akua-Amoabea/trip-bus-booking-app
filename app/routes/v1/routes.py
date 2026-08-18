@@ -10,7 +10,7 @@ route_router = APIRouter(
 )
 
 
-@route_router.post("")
+@route_router.post("", response_model=GetRouteSchema)
 async def add_route(bus: CreateRouteSchema, db: Session=Depends(get_db)):
     new_route = Route(
     leaving_time=bus.leaving_time,
@@ -25,6 +25,10 @@ async def add_route(bus: CreateRouteSchema, db: Session=Depends(get_db)):
     db.add(new_route)
     db.commit()
     db.refresh(new_route)
+    
+    return new_route
+    
+    
     
     
         

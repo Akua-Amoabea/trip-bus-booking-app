@@ -1,12 +1,10 @@
-from datetime import datetime, timezone
 import uuid
-
 from app.config.database import Base
-from sqlalchemy import Column, String, Boolean, ForeignKey
+from sqlalchemy import Column, String, Boolean
 from sqlalchemy.dialects.postgresql import UUID
 
 
-class Seats(Base):
+class Seat(Base):
     __tablename__ = "seats"
     
     uuid=Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
