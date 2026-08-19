@@ -15,7 +15,6 @@ async def add_route(bus: CreateRouteSchema, db: Session=Depends(get_db)):
     new_route = Route(
     leaving_time=bus.leaving_time,
     destination_time=bus.destination_time,
-    with_ac=bus.with_ac,
     location=bus.location,
     destination=bus.destination,
     price=bus.price,

@@ -10,6 +10,7 @@ from app.models.users import User
 from app.models.routes import Route
 from app.models.buses import Bus
 from app.models.locations import Location
+from app.models.seats import Seat
 from alembic import context
 
 # this is the Alembic Config object, which provides

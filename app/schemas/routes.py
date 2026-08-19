@@ -7,8 +7,8 @@ class CreateRouteSchema(BaseModel):
     leaving_time: time
     destination_time: time
     with_ac: bool
-    location: str
-    destination: str
+    location_uuid: UUID
+    destination_uuid: UUID
     price: float
     leaving_date: date
     
@@ -19,8 +19,8 @@ class GetRouteSchema(BaseModel):
     leaving_time: time
     destination_time: time
     with_ac: bool
-    location: str
-    destination: str
+    location_uuid: UUID
+    destination_uuid: UUID
     price: float
     leaving_date: date  
     created_time:datetime 

@@ -1,7 +1,7 @@
 import uuid
 
 from app.config.database import Base
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, String, Integer, Boolean
 from sqlalchemy.dialects.postgresql import UUID
 
 
@@ -10,5 +10,6 @@ class Bus(Base):
     
     uuid=Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     bus_number=Column(String, nullable=False)
+    with_ac = Column(Boolean, nullable=False)
     capacity=Column(Integer, nullable=False)
     
