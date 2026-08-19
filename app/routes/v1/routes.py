@@ -11,14 +11,15 @@ route_router = APIRouter(
 
 
 @route_router.post("", response_model=GetRouteSchema)
-async def add_route(bus: CreateRouteSchema, db: Session=Depends(get_db)):
+async def add_route(route: CreateRouteSchema, db: Session=Depends(get_db)):
     new_route = Route(
-    leaving_time=bus.leaving_time,
-    destination_time=bus.destination_time,
-    location=bus.location,
-    destination=bus.destination,
-    price=bus.price,
-    leaving_date=bus.leaving_date
+    leaving_time=route.leaving_time,
+    destination_time=route.destination_time,
+    location=route.location,
+    destination=route.destination,
+    price=route.price,
+    leaving_date=route.leaving_date,
+    bus_uuid=route.bus_uuid
 )
 
     db.add(new_route)
