@@ -17,6 +17,14 @@ bus_router = APIRouter(
 async def add_bus(bus:CreateBusSchema, db:Session=Depends(get_db)):
     
     with db.begin():
+        get_bus = db.query(Bus).filter(Bus.bus_number == bus.bus_number).first()
+        
+        if get_bus:
+            raise HTTPException(
+                status_code=409,
+                detail="Bus already exists"
+            )
+            
         new_bus = Bus(
         bus_number=bus.bus_number,
         capacity=bus.capacity,
@@ -43,6 +51,9 @@ async def add_bus(bus:CreateBusSchema, db:Session=Depends(get_db)):
 @bus_router.get("", response_model= list[GetBusSchema])
 async def get_bus(db:Session=Depends(get_db)):
    all_buses= db.query(Bus).all()
+   
+   if not all_buses:
+       raise HTTPException(status_code=404, detail="No buses found")
    
    return all_buses
 
