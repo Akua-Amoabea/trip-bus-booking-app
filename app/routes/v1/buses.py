@@ -58,13 +58,6 @@ async def get_bus(db:Session=Depends(get_db)):
    return all_buses
 
 
-@bus_router.get("/{id}", response_model=GetBusSchema) 
-async def get_bus_by_id(uuid: str, db: Session=Depends(get_db)):
-    bus = db.query(Bus).filter(Bus.uuid == uuid).first()
-    if not bus:
-        raise HTTPException(status_code=404,
-                      detail="Bus not Found")
-    
-    return bus
+
 
        

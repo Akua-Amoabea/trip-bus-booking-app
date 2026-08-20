@@ -13,6 +13,14 @@ location_router = APIRouter(
 
 @location_router.post("", response_model=GetLocationSchema)
 async def add_location(location:CreateLocationSchema, db: Session=Depends(get_db)):
+    
+    get_location = db.query(Location).filter(Location.name == location.name).first()
+    
+    if get_location:
+        raise HTTPException(
+            status_code=409,
+            detail="location already exists"
+        )
     new_location = Location(
         name=location.name   
     )
