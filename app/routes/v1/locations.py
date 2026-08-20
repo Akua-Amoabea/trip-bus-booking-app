@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.config.database import get_db
 from app.schemas.locations import CreateLocationSchema, GetLocationSchema
@@ -14,7 +14,7 @@ location_router = APIRouter(
 @location_router.post("", response_model=GetLocationSchema)
 async def add_location(location:CreateLocationSchema, db: Session=Depends(get_db)):
     new_location = Location(
-        name=CreateLocationSchema.name   
+        name=location.name   
     )
     
     db.add(new_location)
@@ -22,4 +22,17 @@ async def add_location(location:CreateLocationSchema, db: Session=Depends(get_db
     db.refresh(new_location)
     
     return new_location
+    
+
+
+@location_router.get("", response_model=list[GetLocationSchema])
+async def get_location(db:Session=Depends(get_db)):
+    all_locations = db.query(Location).all()  
+    if not all_locations:
+        raise HTTPException(
+            status_code=404,
+            detail="No location found"
+        )
+        
+    return all_locations    
     

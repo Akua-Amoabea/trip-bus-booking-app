@@ -11,6 +11,9 @@ from app.models.routes import Route
 from app.models.buses import Bus
 from app.models.locations import Location
 from app.models.seats import Seat
+from app.models.bookings import Booking
+from app.models.luggages import Luggage
+from app.models.selected_seats import SelectedSeat
 from alembic import context
 
 # this is the Alembic Config object, which provides

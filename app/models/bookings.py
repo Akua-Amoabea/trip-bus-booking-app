@@ -8,8 +8,8 @@ class Booking(Base):
     __tablename__ = 'bookings'
     
     uuid=Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    luggage_uuid= Column(UUID(as_uuid=True), ForeignKey("luggages.uuid"), nullable=False)
     route_uuid= Column(UUID(as_uuid=True), ForeignKey("routes.uuid"), nullable=False)
     user_uuid= Column(UUID(as_uuid=True), ForeignKey("users.uuid"), nullable=False)
+
     
  

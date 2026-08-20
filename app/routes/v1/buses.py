@@ -34,7 +34,7 @@ async def add_bus(bus:CreateBusSchema, db:Session=Depends(get_db)):
             )
             db.add(new_seat)
             
-        db.commit()
+        
         db.refresh(new_bus)
             
     return new_bus
@@ -51,7 +51,7 @@ async def get_bus(db:Session=Depends(get_db)):
 async def get_bus_by_id(uuid: str, db: Session=Depends(get_db)):
     bus = db.query(Bus).filter(Bus.uuid == uuid).first()
     if not bus:
-        HTTPException(status_code=404,
+        raise HTTPException(status_code=404,
                       detail="Bus not Found")
     
     return bus
