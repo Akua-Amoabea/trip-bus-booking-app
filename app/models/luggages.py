@@ -11,3 +11,4 @@ class Luggage(Base):
     booking_uuid=Column(UUID(as_uuid=True), ForeignKey("bookings.uuid"), nullable=False)
     number_of_luggages=Column(Integer, nullable=False)
     weight_of_luggages=Column(Float, nullable=False)
+    price = Column(Float,nullable=False)
