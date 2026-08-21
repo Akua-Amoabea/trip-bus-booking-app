@@ -10,7 +10,7 @@ app = FastAPI(title='Trip App')
 
 app.include_router(auth_router)
 app.include_router(user_router)
-app.include_router(route_router)
 app.include_router(bus_router)
 app.include_router(location_router)
+app.include_router(route_router)
 app.include_router(bookings_router)

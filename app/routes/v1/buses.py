@@ -49,7 +49,7 @@ async def add_bus(bus:CreateBusSchema, db:Session=Depends(get_db)):
 
 
 @bus_router.get("", response_model= list[GetBusSchema])
-async def get_bus(db:Session=Depends(get_db)):
+async def get_buses(db:Session=Depends(get_db)):
    all_buses= db.query(Bus).all()
    
    if not all_buses:

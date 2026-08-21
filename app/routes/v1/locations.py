@@ -34,7 +34,7 @@ async def add_location(location:CreateLocationSchema, db: Session=Depends(get_db
 
 
 @location_router.get("", response_model=list[GetLocationSchema])
-async def get_location(db:Session=Depends(get_db)):
+async def get_locations(db:Session=Depends(get_db)):
     all_locations = db.query(Location).all()  
     if not all_locations:
         raise HTTPException(
