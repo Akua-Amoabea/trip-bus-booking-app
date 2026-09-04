@@ -6,7 +6,6 @@ from app.models.buses import Bus
 from app.models.seats import Seat
 
 
-
 bus_router = APIRouter(
     prefix="/v1/buses",
     tags=["buses"]

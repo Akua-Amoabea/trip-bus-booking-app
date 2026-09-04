@@ -8,12 +8,14 @@ from app.schemas.selected_seats import GetSelectedSeatSchema
 class AddBookingsSchema(BaseModel):
    route_uuid: UUID
    user_uuid: UUID
+   status: float
    
 
 class GetBookingsSchema(BaseModel):
     uuid:UUID
     route_uuid: UUID
-    user_uuid: UUID   
+    user_uuid: UUID
+    status:str   
     selected_seats: list[GetSelectedSeatSchema]
     lugggages: Optional[GetLuggagesSchema] = None
     
@@ -26,5 +28,8 @@ class CreateBookingsSchema(BaseModel):
     luggages: Optional[AddLuggagesSchema] = None
 
 
-
+class UpdateBookingsSchema(BaseModel):
+    status: str
+    
+   
         
