@@ -42,7 +42,7 @@ async def get_locations(db:Session=Depends(get_db), current_user :User = Depends
     if not user:
             raise HTTPException(
                 status_code=401,
-                detail="User not authenticated"
+                detail="User not authorized"
             )
     all_locations = db.query(Location).all()  
     if not all_locations:

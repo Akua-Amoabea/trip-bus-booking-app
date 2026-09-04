@@ -71,7 +71,7 @@ async def get_routes(
     if not user:
             raise HTTPException(
                 status_code=401,
-                detail="User not authenticated"
+                detail="User not authorized"
             )
             
     all_routes = []

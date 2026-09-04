@@ -28,7 +28,7 @@ async def add_new_bookings(bookings:CreateBookingsSchema, db: Session=Depends(ge
     if not user:
         raise HTTPException(
             status_code=401,
-            detail="User not authenticated"
+            detail="User not authorized"
         )
     
     
@@ -121,7 +121,7 @@ async def get_bookings(db: Session = Depends(get_db), current_user: User = Depen
     if not user:
         raise HTTPException(
             status_code=401,
-            detail="User not authenticated"
+            detail="User not authorized"
         )
 
     all_bookings = db.query(Booking).all()
@@ -190,7 +190,7 @@ async def change_status_of_booking(
     if not user:
             raise HTTPException(
                 status_code=401,
-                detail="User not authenticated"
+                detail="User not authorized"
             )
     get_booking = (
         db.query(Booking)

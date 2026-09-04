@@ -51,6 +51,15 @@ async def add_bus(bus:CreateBusSchema, db:Session=Depends(get_db)):
 
 @bus_router.get("", response_model= list[GetBusSchema])
 async def get_buses(db:Session=Depends(get_db), current_user: User=Depends(get_current_user)):
+   user = db.query(User).filter(User.uuid == current_user.uuid).first()
+   
+   if not user:
+           raise HTTPException(
+                       status_code=401,
+                       detail="User not authorized"
+                )         
+
+    
    all_buses= db.query(Bus).all()
    
    if not all_buses:
