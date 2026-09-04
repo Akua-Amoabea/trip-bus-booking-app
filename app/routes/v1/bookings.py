@@ -12,15 +12,25 @@ from app.schemas.luggages import  GetLuggagesSchema
 from app.models.selected_seats import SelectedSeat
 from app.models.bookings import Booking
 from app.models.luggages import Luggage
+from app.models.users import User
+from app.services.auth import get_current_user
 
 
 bookings_router = APIRouter(
     prefix="/v1/bookings",
-    tags=['bookings']
+    tags=['Bookings']
 )
 
 @bookings_router.post("", response_model=GetBookingsSchema)
-async def add_new_bookings(bookings:CreateBookingsSchema, db: Session=Depends(get_db)):
+async def add_new_bookings(bookings:CreateBookingsSchema, db: Session=Depends(get_db), current_user: User = Depends(get_current_user)):
+    user = db.query(User).filter(User.uuid == current_user.uuid).first()
+        
+    if not user:
+        raise HTTPException(
+            status_code=401,
+            detail="User not authenticated"
+        )
+    
     
     new_luggages = None
     
@@ -71,15 +81,6 @@ async def add_new_bookings(bookings:CreateBookingsSchema, db: Session=Depends(ge
             
             print("Seats found:", all_seats)
             
-            
-            stmt = (
-                select(Booking, SelectedSeat, Luggage).join(
-                    SelectedSeat, SelectedSeat.booking_uuid == Booking.uuid 
-                    
-                ).join(Luggage, Luggage.booking_uuid == Booking.uuid)
-                
-            )
-            
         return GetBookingsSchema(
             uuid=new_bookings.uuid,
             route_uuid=new_bookings.route_uuid,
@@ -112,9 +113,24 @@ async def add_new_bookings(bookings:CreateBookingsSchema, db: Session=Depends(ge
         
         
 @bookings_router.get("", response_model=list[GetBookingsSchema])
-async def get_bookings(db: Session = Depends(get_db)):
+async def get_bookings(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    
+    
+    user = db.query(User).filter(User.uuid == current_user.uuid).first()
+    
+    if not user:
+        raise HTTPException(
+            status_code=401,
+            detail="User not authenticated"
+        )
 
     all_bookings = db.query(Booking).all()
+    
+    if not all_bookings:
+        raise HTTPException(
+            status_code=404,
+            detail="No Bookings Found"
+        )
 
     for booking in all_bookings:
 
@@ -165,7 +181,17 @@ async def change_status_of_booking(
     bookings: UpdateBookingsSchema,
     booking_uuid: UUID,
     db: Session = Depends(get_db),
+    current_user : User = Depends(get_current_user)
 ):
+    
+    
+    user = db.query(User).filter(User.uuid == current_user.uuid).first()
+        
+    if not user:
+            raise HTTPException(
+                status_code=401,
+                detail="User not authenticated"
+            )
     get_booking = (
         db.query(Booking)
         .filter(Booking.uuid == booking_uuid.uuid)

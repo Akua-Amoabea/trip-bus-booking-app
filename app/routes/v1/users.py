@@ -13,7 +13,7 @@ from app.services.email import send_verification_email
 
 user_router = APIRouter(
     prefix="/v1/users",
-    tags=["users"]
+    tags=["Users"]
 )
 
 

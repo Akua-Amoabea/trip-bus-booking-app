@@ -4,11 +4,13 @@ from app.schemas.buses import CreateBusSchema, GetBusSchema
 from app.config.database import get_db
 from app.models.buses import Bus
 from app.models.seats import Seat
+from app.models.users import User
+from app.services.auth import get_current_user
 
 
 bus_router = APIRouter(
     prefix="/v1/buses",
-    tags=["buses"]
+    tags=["Buses"]
 )
 
 
@@ -48,7 +50,7 @@ async def add_bus(bus:CreateBusSchema, db:Session=Depends(get_db)):
 
 
 @bus_router.get("", response_model= list[GetBusSchema])
-async def get_buses(db:Session=Depends(get_db)):
+async def get_buses(db:Session=Depends(get_db), current_user: User=Depends(get_current_user)):
    all_buses= db.query(Bus).all()
    
    if not all_buses:

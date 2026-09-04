@@ -7,9 +7,11 @@ from app.models.routes import Route
 from app.config.database import get_db
 from app.schemas.locations import GetLocationSchema
 from app.models.locations import Location
+from app.models.users import User
+from app.services.auth import get_current_user
 
 route_router = APIRouter(
-    tags= ["routes"],
+    tags= ["Routes"],
     prefix="/v1/routes"
 )
 
@@ -60,8 +62,18 @@ async def add_route(route: CreateRouteSchema, db: Session=Depends(get_db)):
 @route_router.get("", response_model=GetAllRouteSchema)
 async def get_routes(
     db: Session = Depends(get_db),
-    filters: FilterRouteSchema = Depends()
+    filters: FilterRouteSchema = Depends(),
+    current_user: User = Depends(get_current_user)
 ):  
+    
+    user = db.query(User).filter(User.uuid == current_user.uuid).first()
+        
+    if not user:
+            raise HTTPException(
+                status_code=401,
+                detail="User not authenticated"
+            )
+            
     all_routes = []
     
     query = db.query(Route);
