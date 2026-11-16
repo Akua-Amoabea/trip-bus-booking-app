@@ -42,12 +42,12 @@ trip-bus-booking-app/
 │   ├── models/
 │   ├── schemas/
 │   ├── services/
-│   └── main.py
+│   ├── main.py
+│   └── requirement.txt
 ├── .env.example
 ├── .gitignore
 ├── alembic.ini
 ├── docker-compose.yml
-├── requirements.txt
 └── README.md
 ```
 
@@ -64,7 +64,7 @@ Install the following:
 ### 1. Clone the repository
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone git@github.com:Akua-Amoabea/trip-bus-booking-app.git
 cd trip-bus-booking-app
 ```
 
