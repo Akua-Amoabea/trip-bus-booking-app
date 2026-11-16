@@ -29,8 +29,7 @@ password = quote_plus(settings.DB_PASSWORD).replace("%", "%%")
 
 config.set_main_option(
     "sqlalchemy.url",
-    f"postgresql://{settings.DB_USER}:{password}@{settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_NAME}"
-)
+f"postgresql+psycopg2://{settings.DB_USER}:{password}@{settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_NAME}")
 target_metadata = Base.metadata
 
 print(Base.metadata.tables.keys())    

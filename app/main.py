@@ -6,7 +6,13 @@ from app.routes.v1.buses import bus_router
 from app.routes.v1.locations import location_router
 from app.routes.v1.bookings import bookings_router
 
-app = FastAPI(title='Trip App')
+app = FastAPI(
+    title="TRIP App",
+    description="TRIP is a bus booking platform backend built with FastAPI. "
+                "It provides APIs for user authentication, OTP verification, "
+                "and bus booking management.",
+    version="1.0.0"
+)
 
 app.include_router(auth_router)
 app.include_router(user_router)
